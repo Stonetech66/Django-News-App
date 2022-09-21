@@ -1,0 +1,22 @@
+<b><a href="{% url 'userprofile' object.name.pk %}">{{ object.name }}</a>-              {{ object.date_published }}</b><br>
+   <p>{{ object.comment }}{% if user.id == object.name.id  %} <a href="{% url 'Commentdelete'  object.pk %}">Delete comment</a>
+    {% endif %}</p>
+ 
+<hr>
+{% if not objects.replies.all %}
+{% else %}
+<h2>Replies ({{ object.replies.count }})</h2>
+{% endif %}
+{% for i in object.replies.all %}<p>
+<b><a href="{% url 'userprofile' i.name.pk %}">{{ i.name }}</a>-              {{ i.date_published|timesince }} ago</b><br></p>
+<p>{{ i.body }} <a href="{% url 'reply-delete'  i.pk %}"> Delete Reply</a></p>
+<hr>
+{% endfor %}
+<hr>
+
+<form method="POST">{% csrf_token %} 
+    {% for field in reply_form %}
+ <label>Your Reply:</label>{{ field}}
+    {% endfor %}
+    <button>Reply</button>
+</form>

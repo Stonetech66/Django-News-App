@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<head>
+  <style>
+	.container{
+		display:grid;
+		grid-template-columns:3fr 1fr ;
+
+	}
+
+</style>  
+</head>
+<body>
+<div class="container">
+<div>
+<p>{{ user.profile_pic }}</p>
+<p><strong>Userame: </strong>{{ user.user.username }}</p>
+<p><strong>Bio: </strong>{{ user.bio }}</p>
+<p><strong>Date joined: </strong>{{ user.user.date_joined }}</p>
+</div>
+    {% if user.user.id == request.user.id %}
+<div>
+
+<a href="{% url 'userprofile-edit' user.pk %}"> Edit Profile</a>
+
+</div>
+{% endif %}
+</div>
+<hr>
+<div class="container">
+    <div>
+        {% if not user.user.userarticle.all %}
+        <h2><i>Articles</i></h2>
+        <p>No articles Yet</p>
+        {% else %}
+        <h2> Articles({{ user.user.userarticle.count }})</h2>
+        {% for article in user.user.userarticle.all %}
+        <p><a href="{% url 'ArticleDetailview' article.pk %}">{{ article.title }}</a> {{ article.date_published }} </p>
+        {% endfor %}
+        {% endif %}
+    </div>
+    {% if request.user.id == user.user.id %}
+    <div>
+        {% if not user.user.user_comments.all %}
+        <h2><i>Recent Activities</i></h2>
+        <p>No activities yet</p>
+        {% else %}
+        <h2>Recent Activities({{ user.user.user_comments.count }})</h2>
+        {% for comment in user.user.user_comments.all %}
+        {{ comment.date_published }}
+        <p>You commented on 
+            {% if comment.Article.Author.id == user.user.id %}your  
+            {% else %}@<a href="{% url 'userprofile' comment.Article.Author.pk %}">{{ comment.Article.Author }}</a>{% endif %} post: <br>
+            <a href="{% url 'ArticleDetailview' comment.Article.pk %}">"{{ comment.Article.snippet }}" </a>
+        </p>
+
+        <p>{{ comment.comment }}</p>
+        <hr>
+        {% endfor %}
+        {% endif %}
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>

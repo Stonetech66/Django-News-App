@@ -1,0 +1,11 @@
+<h1>Latest News</h1>
+{% for i in categoryy %}
+<ul><a href="{% url 'category' i.slug  %}"><li>{{ i.name }}</li></a></ul>{% endfor %}
+<hr><br>
+{% for i in object_list %}
+<p><a href="{% url 'ArticleDetailview' i.pk %}">{{ i.snippet }}</a></p></a><p>{{ i.date_published }}|       <a href="{% url 'userprofile' i.Author.pk %}">{{ i.Author }}</a></p>
+<hr>
+
+
+{% endfor %}
+     

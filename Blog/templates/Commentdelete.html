@@ -1,0 +1,7 @@
+{% if object.name.id == request.user.id %}
+<form method="POST">{% csrf_token %}
+<p>Are you sure you want to delete comment   "{{ object.body }} {{ object.comment }}" ?</p>
+{{ form.as_p }}
+<button>Confirm</button><a href="{{ request.META.HTTP_REFERER }}">cancel</a>
+</form>
+{% endif %}

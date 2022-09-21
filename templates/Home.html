@@ -1,0 +1,12 @@
+{% if user.is_authenticated %}<h1>Welcome {{ user.username }}</h1><p><a href="{% url 'account_logout' %}">Logout</a>|
+<a href="{% url 'userprofile' request.user.userprofile.pk %}">Profile</a>|<a href="{% url 'users-profile'  request.user.pk %}">Account Information|<a hr</a></p>
+{% else %}<p><a href="{% url 'account_login' %}">Login</a></p>
+{% endif %}
+<h2><a href="{% url 'ArticleListview' %}">See latest News</a></h2><p>
+{% if perms.Blog.special_articlecreate %}
+	<a href="{% url 'ArticleCreateview' %}">+Add Blog</a></p>
+{% endif %}
+
+<form method= "GET" action="{% url 'search' %}">
+	<input type="text" name="q" placeholder="Search" arial-label="search"><button>Search</button>
+</form>

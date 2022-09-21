@@ -1,0 +1,41 @@
+</br>
+<h1>{{ object.title }}</h1><br><br><a href="{% url 'home' %}">home</a>
+
+<p>Published by:<a href="{% url 'userprofile' object.Author.pk %}">{{ object.Author }}</a></p>
+<p>{{ object.date_published }}</p>
+{% if object.header_image %}
+<p><img src="{{ object.header_image.url }}"></p>{% endif %}
+<p>{{ object.body }}</p>
+{% if user.id == object.Author.id %}
+<p><a href="{% url 'ArticleUpdateview' object.pk %}">Edit</a>|
+  <a href="{% url 'ArticleDeleteview' object.pk %}">Delete</a></p>
+{% endif %}
+   <h2>{% if object.comments.count == 1 %} 1 Comment</h2> 
+   {% else %}{{ object.comments.count }} Comments...</h2>
+   {% endif %}
+ {% if not object.comments.all %}
+   <p>No comments yet</p>
+ {% else %}
+
+   {% for i in object.comments.all %}
+   <hr>
+   <b><a href="{% url 'userprofile' i.name.pk %}">{{ i.name }}</a>-              {{ i.date_published }}</b><hr>
+   <p>{{ i.comment }}</p>
+   <p><a href="{% url 'comment-replies' i.pk %}">reply</a></p>
+
+   </a></p>{{ i.replies.first }}
+    {% if user.id == i.name.id  %} <a href="{% url 'Commentdelete'  i.pk %}">Delete comment</a>
+    {% endif %}</p>
+ 
+ {% endfor %}
+ {% endif %}
+<hr>
+<form method="POST">{% csrf_token %}
+{{ comment_form }}
+<button>Post Comment</button></form> 
+
+
+
+ 
+
+

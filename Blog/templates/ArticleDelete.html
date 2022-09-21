@@ -1,0 +1,7 @@
+{% if user.id == object.Author.id %}
+<form method="POST">{% csrf_token %}
+<p>Are you sure you want to delete?</p>
+{{ form.as_p }}
+<button>Confirm</button><a href="../">cancel</a>
+</form>
+{% endif %}

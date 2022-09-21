@@ -1,0 +1,9 @@
+{% if request.user.username == object.username %}
+<p><strong>Username:</strong>{{ object.username }}</p>
+<p><strong>Email:</strong>{{ object.email }}</p>
+<p><strong>Birth_date:</strong>{{ object.Birth_date }}</p>
+<p><strong>Gender:</strong>{{ object.gender }}</p>
+<p><strong>Country:</strong>{{ object.country}}</p>
+
+<a href="{% url 'edit-Account'  object.pk %}">Edit</a>
+{% endif %}

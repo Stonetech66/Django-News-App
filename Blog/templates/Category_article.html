@@ -1,0 +1,10 @@
+
+<h1>{{ cats|capfirst }}</h1>
+
+{% for i in category %}
+
+<a href="{% url 'ArticleDetailview' i.pk %}">
+<p>{{ i.snippet }}</p></a><p>{{ i.date_published }}|      <a href="{% url 'userprofile' i.Author.pk %}"> {{ i.Author }}</a></p>
+<hr>
+
+{% endfor %}

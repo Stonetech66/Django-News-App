@@ -1,0 +1,6 @@
+{% if request.user.username == object.username %}
+<form method="POST">{% csrf_token %}
+    {{ form.as_p }}
+    <button>Confirm</button>
+</form>
+{% endif %}
